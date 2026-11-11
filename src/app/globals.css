@@ -1,26 +1,226 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Pure white/light mode only — never react to OS/device prefers-color-scheme: dark */
+@custom-variant dark (&:where(.never-light-override *));
+
+@theme {
+  --font-sans: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif;
+  --font-bengali: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root,
+html,
+body {
+  color-scheme: light only !important;
+  forced-color-adjust: none;
+  --font-gov-bangla: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Force light color scheme on html, body, and all native controls — prevent any OS/browser dark mode override & prevent scrollbar layout shift */
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color-scheme: light only !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
 }
+
+input,
+textarea,
+select,
+option,
+button {
+  color-scheme: light only !important;
+}
+
+select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  html,
+  body,
+  input,
+  textarea,
+  select,
+  option,
+  button {
+    color-scheme: light only !important;
+  }
+
+  html,
+  body {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    font-family: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif;
+  }
+
+  body {
+    font-family: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif;
+  }
+}
+
+/* Force Nikosh / Sutonny Unicode standard font on all elements and printable templates */
+body, button, input, select, textarea, table, th, td, p, span, h1, h2, h3, h4, h5, h6,
+#printable-template-document,
+#printable-template-document *,
+.font-sans {
+  font-family: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif !important;
+}
+
+/* Custom subtle animations */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-slide {
+  animation: fadeInSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalCardIn {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-backdrop {
+  animation: modalBackdropIn 0.2s ease-out forwards;
+}
+
+.animate-modal-card {
+  animation: modalCardIn 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
+/* Print optimizations for government documents / templates */
+@media print {
+  html, body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    font-family: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* Completely eliminate any UI elements marked with .no-print */
+  .no-print,
+  .no-print * {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Reset outer main container during print */
+  main {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #printable-template-document {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    min-height: auto !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  #printable-template-document table {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: table !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  #printable-template-document,
+  #printable-template-document * {
+    font-family: var(--font-nikosh), var(--font-solaiman-lipi), var(--font-adorsho-lipi), sans-serif !important;
+  }
+
+  /* Remove any surrounding borders or box-shadows during print */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-break-after-page {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+}
+

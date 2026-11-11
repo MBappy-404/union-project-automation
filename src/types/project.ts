@@ -528,7 +528,6 @@ export const INITIAL_PROJECT_DATA: ProjectData = {
   signature: "",
   memberFatherOrHusband: "",
   wardCommitteeMembers: DEFAULT_WARD_MEMBERS,
-  tenderEvaluationList: DEFAULT_TENDER_EVALUATION_LIST,
 
   // ৫. ব্যাংক, চেক, বিল
   bankName: "",
@@ -642,7 +641,6 @@ export const DEMO_PROJECT_DATA: ProjectData = {
   signature: "সম্পাদিত ও অনুমোদিত",
   memberFatherOrHusband: "",
   wardCommitteeMembers: DEFAULT_WARD_MEMBERS,
-  tenderEvaluationList: DEFAULT_TENDER_EVALUATION_LIST,
 
   // ৫. ব্যাংক, চেক, বিল ও আর্থিক লেনদেন (ইউজারের কর্তন শিটের হুবহু মিল)
   bankName: "সোনালি ব্যাংক লিমিটেড",
